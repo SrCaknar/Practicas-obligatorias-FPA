@@ -1,13 +1,11 @@
 """
 variables usadas en "main.py"
-last modification: Mar 16 2025
-@authors:LV
+last modification: Mar 28 2025
+@authors:LUPE, jORGE, FERNANDO, BORJA
 """
-import numpy as np 
 
-## se puede usar sets para las constantes
-vidas_j = 10     #vidas jugador or maquina     
-#tablero_vacio  = np.full((10,10), " ") 
+vidas_j = 10         
+
 orientacion = ["H", "V"]  #horizontal and vertical
 """
   4 barcos de 1 posición de eslora

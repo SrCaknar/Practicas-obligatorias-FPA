@@ -1,0 +1,17 @@
+requests
+beautifulsoup4
+pandas
+selenium
+webdriver-manager
+
+webdriver-manager
+
+requests
+
+pandas
+requests
+
+requests
+pandas
+
+webdriver-manager

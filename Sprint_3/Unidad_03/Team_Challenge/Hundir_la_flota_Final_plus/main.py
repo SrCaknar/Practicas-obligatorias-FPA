@@ -1,7 +1,16 @@
+"""
+Clase principal
+last modification: Mar 28 2025
+@authors:LUPE, jORGE, FERNANDO, BORJA
+"""
+import pygame
 from clases import Jugador
-from variables import *
+
 
 print("Bienvenido a Hundir la flota grumete")
+pygame.mixer.init()
+pygame.mixer.music.load('./ship.mp3')
+pygame.mixer.music.play()
 
 def switch(opcion):
     diccionario = {
@@ -35,60 +44,65 @@ def id_jugador():
     return True
 
 def jugar():
-    global jugador
+    
 
-    # COMENTARIO: Si el jugador intenta jugar sin haber introducido su nombre,
-    # antes se producía un error porque la variable "jugador" no existía. Ahora lo comprobamos antes.
     if "jugador" not in globals():
-        print("Primero debes introducir tu nombre (opción 2)")
+        print("======Primero debes introducir tu nombre (opción 2)===")
         return
 
     print(f"Empecemos a jugar, {jugador.id}")
     
     jugador.posicionar_barcos()
-    maquina = Jugador("máquina")
+    maquina = Jugador("MAQUINA")
     maquina.posicionar_barcos()
 
-    jugador.imprimir_tableros(maquina)
-
-    # COMENTARIO: Antes se hacían 4 disparos por turno sin comprobar si alguien ya había perdido.
-    # Ahora disparamos hasta que alguien pierda todas las vidas, verificando tras cada disparo.
+    count = 0
     while jugador.vidas > 0 and maquina.vidas > 0:
-        jugador.imprimir_tablero()
+        
         jugador.disparo(maquina)
 
-        if maquina.vidas <= 0:
+        if jugador.vidas == 0:
+            print(f"HAS PERDIDO {jugador.id} ")
             break
 
         maquina.disparo_maquina(jugador)
 
-        jugador.contador_vidas()
-        maquina.contador_vidas()
+        jugador.imprimir_tableros(maquina)
+        count = count +1
 
-        if jugador.vidas <= 0:
+        if maquina.vidas == 0:
+            print(f"HAS GANADO {jugador.id}, ENHORABUENA")
             break
 
-        pregunta = int(input("""Indique el número con su decision:
-                         1: Seguir jugando
-                         2: Visualizar marcador
-                         3: Salir del juego"""))
-        if pregunta == 1:
-            continue
-        elif pregunta == 2:
-            # COMENTARIO: Antes ver el marcador salía del juego. Ahora simplemente continúa.
-            jugador.marcador(maquina)
-            continue
-        elif pregunta == 3:
-            break
+           
+        #===Opcion Salir===
+        salir = count%2
+        if salir == 0:
+            pregunta = int(input("""Indique el número con su decision:
+                                 1: Seguir jugando
+                                 2: Visualizar marcador
+                                 3: Salir del juego
+                                 """))
+            if pregunta == 1:
+                continue
+            elif pregunta == 2:
+                jugador.marcador(maquina)
+                continue
+            elif pregunta == 3:
+                break     
 
     if jugador.vidas == 0:
         print(f"Has perdido, {jugador.id}")
     elif maquina.vidas == 0:
         print(f"¡Enhorabuena, {jugador.id}! Has ganado a la máquina.")
 
+
+
 def salir():
     print("¡Hasta pronto!")
     exit()
+
+
 
 while True:
     print("""Seleccione una opción:
